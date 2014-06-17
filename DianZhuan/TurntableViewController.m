@@ -39,7 +39,7 @@
     [self.view addSubview:image2];
     
     //添加按钮
-    btn_start = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    btn_start = [UIButton buttonWithType:UIButtonTypeCustom];
     btn_start.frame = CGRectMake(130.0, 130.0, 70.0, 70.0);
     [btn_start addTarget:self action:@selector(choujiang) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn_start];
@@ -57,8 +57,60 @@
     btn_start.enabled = NO;
     //******************旋转动画******************
     //产生随机角度
-    srand((unsigned)time(0));  //不加这句每次产生的随机数不变
-    random = (rand() % 20) / 10.0;
+//    srand((unsigned)time(0));  //不加这句每次产生的随机数不变
+    random = (arc4random() % 20000) / 10000.0;
+     NSLog(@"random 01 = %f",random);
+//    random = (arc4random() / 20) / 10.0;
+    NSLog(@"random 02 = %f",random);
+    
+    float one = 0 ;
+    float two = 0 ;
+    float three = 0 ;
+    float four = 0 ;
+    float five = 0 ;
+    float six = 0 ;
+    float seven = 0 ;
+    
+    NSMutableArray *muArr = [NSMutableArray array];
+    
+    for (NSInteger i=0; i<20000; i++) {
+        float num = (arc4random()%1000);
+        float rValue = num;//fmodf(10+orign+num, 2.0);
+        if (rValue<=(10)) {
+//            [muArr addObject:[NSNumber numberWithFloat:num]];
+            one++;
+        }else if (rValue<=(30)){
+            two++;
+        }else if (rValue<=(60)){
+            three ++;
+        }else if (rValue<=(100)){
+            four ++;
+        }else if (rValue <=(140)){
+            five ++;
+        }else if (rValue <=(180.0)){
+            
+            six ++;
+        }else if (rValue<=(1000.0)){
+            
+            seven ++;
+            
+        }
+        
+        
+    }
+    NSLog(@"运行count次数的结果为:");
+    
+    NSLog(@"0出现概率:%@",[NSString stringWithFormat:@"%0.2lf",(one/20000*100) ]);
+    NSLog(@"1出现概率:%@",[NSString stringWithFormat:@"%0.2lf",(two/20000*100) ]);
+    NSLog(@"2出现概率:%@",[NSString stringWithFormat:@"%0.2lf",(three/20000*100) ]);
+    NSLog(@"3出现概率:%@",[NSString stringWithFormat:@"%0.2lf",(four/20000*100) ]);
+    
+    
+    
+
+//    random = (arc4random()/20000);//1-19000
+    
+    
     //设置动画
     CABasicAnimation *spin = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
     [spin setFromValue:[NSNumber numberWithFloat:M_PI * (0.0+orign)]];
@@ -72,8 +124,12 @@
     //锁定结束位置
     image2.transform = CGAffineTransformMakeRotation(M_PI * (10.0+random+orign));
     //锁定fromValue的位置
+//    NSLog(@"random = %f",random);
+//    NSLog(@"orign = %f",orign);
     orign = 10.0+random+orign;
+//    NSLog(@"orign = %f",orign);
     orign = fmodf(orign, 2.0);
+//    NSLog(@"orign = %f",orign);
 }
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
